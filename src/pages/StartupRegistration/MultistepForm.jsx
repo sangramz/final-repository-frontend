@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./MultiStepForm.css";
+import "./MultistepForm.css";
 import logo from "./assets/logo.png";
 
 import {

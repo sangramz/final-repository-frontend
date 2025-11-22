@@ -1,5 +1,5 @@
 import React from "react";
-import "./StatsCard.css";
+import "./Statscard.css";
 
 export default function StatsCard({
   title,

@@ -90,8 +90,8 @@ export default function RegisterPage() {
     };
 
     try {
-      // Call YOUR local proxy instead of the real API
-      const response = await fetch("http://localhost:8080/api/register", {
+      // Call via Vite proxy
+      const response = await fetch("/api/startups/register/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./categorySelector.css";
+import "./categoryselector.css";
 import { FiCheckCircle, FiShoppingCart, FiHeart, FiCpu, FiGrid } from "react-icons/fi";
 import { MdRealEstateAgent } from "react-icons/md";
 import { GiByzantinTemple } from "react-icons/gi";
@@ -60,21 +60,20 @@ const CategorySelector = () => {
         {categoriesData.map((cat) => (
           <div
             key={cat.id}
-            className={`category-card ${
-              selected.includes(cat.id) ? "active" : ""
-            }`}
+            className={`category-card ${selected.includes(cat.id) ? "active" : ""
+              }`}
             onClick={() => toggleCategory(cat.id)}
           >
-       <div className="category-content">
-  <div className="category-icon" style={{ background: cat.color }}>
-    {cat.icon}
-  </div>
+            <div className="category-content">
+              <div className="category-icon" style={{ background: cat.color }}>
+                {cat.icon}
+              </div>
 
-  <div className="category-text">
-    <h4>{cat.name}</h4>
-    <p>{cat.count} Opportunities</p>
-  </div>
-</div>
+              <div className="category-text">
+                <h4>{cat.name}</h4>
+                <p>{cat.count} Opportunities</p>
+              </div>
+            </div>
 
             <label className="switch">
               <input
