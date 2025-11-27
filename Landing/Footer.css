@@ -1,169 +1,129 @@
-.footer {
-  width: 100%;
-  max-width: 1440px;
+@font-face {
+  font-family: "URWGeometric";
+  src: url("/fonts/URWGeometricRegular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* FULL WIDTH FIXED FOOTER */
+.bottom-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100vw;
+
+  padding: 22px 0;
+
+  border-top: 1px solid rgba(0,0,0,0.15);
+  z-index: 99999;
+
+  backdrop-filter: none;
+}
+
+/* INTERNAL MAX LAYOUT */
+.footer-wrapper {
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 5rem 5rem 2.5rem;
-  background: #ffffff00;
-  font-family: "Inter", sans-serif;
-  color: #0f172a;
+  padding: 0 28px;
+  font-family: "URWGeometric", sans-serif;
+  color: #000;
+  margin-left: 2rem;
+
 }
 
-/* TOP GRID — widescreen optimized */
-.footer-top {
+/* GRID LIKE THE REFERENCE */
+.footer-grid {
   display: grid;
-  grid-template-columns: 2.2fr 1fr 1fr 1fr 1fr;
-  gap: 4rem;
-  align-items: flex-start;
+  grid-template-columns: 260px repeat(4, 1fr);
+  gap: 40px;
 }
 
-/* LOGO */
-.footer-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
- 
-}
-
-.footer-logo-img {
-  width: 12rem;
-  height: 56px;
-  object-fit: contain;
-}
-
-/* BRAND TEXT */
+/* BRAND SECTION */
 .brand-desc {
-  margin: 1.2rem 0;
-  color: #475569;
-  max-width: 230px;
-  line-height: 1.65;
-  font-size: 15px;
+  margin: 12px 0 16px;
+  opacity: 0.65;
 }
 
-/* SOCIAL ICONS */
 .footer-social {
   display: flex;
   gap: 14px;
-  margin-top: 1rem;
 }
-
-.footer-social a {
-  width: 40px;
-  height: 40px;
-  background: #f4f4f6;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #27364b;
-  font-size: 18px;
+.footer-social svg {
   cursor: pointer;
-  transition: 0.2s ease;
+  font-size: 20px;
+  opacity: 0.75;
+  transition: 0.2s;
+}
+.footer-social svg:hover {
+  opacity: 1;
 }
 
-.footer-social a:hover {
-  background: #ebedf3;
-  transform: translateY(-2px);
+.footer-logo {
+  height: 38px;
+  margin-bottom: 14px;
 }
 
-/* COLUMN HEADINGS + LINKS */
-.footer-col h4 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 1.2rem;
-}
-
-.footer-col a {
-  display: block;
-  margin-bottom: 0.75rem;
-  color: #4b596a;
+/* HEADERS + LINKS */
+.footer-section h4 {
   font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s ease;
+  font-weight: 600;
+  margin-bottom: 14px;
 }
 
-.footer-col a:hover {
-  color: #1d4ed8;
+.footer-section a {
+  display: block;
+  margin-bottom: 10px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.footer-section a:hover {
+  opacity: 1;
 }
 
 /* DIVIDER */
-.footer-divider {
-  width: 100%;
-  height: 1px;
-  background: #e2e8f0;
-  margin: 3.5rem 0 2.5rem;
-}
 
-/* NEWSLETTER ROW */
-.footer-newsletter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2.2rem 0;
-  gap: 2rem;
-}
 
-.newsletter-left h3 {
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.newsletter-left p {
-  margin-top: 0.6rem;
-  color: #475569;
-  max-width: 420px;
-  line-height: 1.6;
-}
-
-/* INPUT + BUTTON */
-.newsletter-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.newsletter-input {
-  padding: 15px 18px;
-  width: 380px;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  font-size: 15px;
-}
-
-.newsletter-btn {
-  padding: 15px 34px;
-  background: #fbbf24;
-  border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  color: #1a1a1a;
-  transition: 0.2s ease;
-}
-
-.newsletter-btn:hover {
-  background: #f59e0b;
-}
-
-/* BOTTOM BAR */
+/* LAST LINE */
 .footer-bottom {
-  margin-top: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #475569;
-  font-size: 14px;
 }
 
 .footer-links {
   display: flex;
-  gap: 2.5rem;
+  gap: 22px;
 }
-
 .footer-links a {
-  color: #475569;
+  opacity: 0.7;
   cursor: pointer;
 }
-
 .footer-links a:hover {
-  text-decoration: underline;
+  opacity: 1;
+}
+
+/* MOBILE FIX */
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+.footer-inner {
+  width: 100%;
+  max-width: 1800px; /* optional, prevents excessive stretching */
+  padding-left: 8rem;
+  padding-right: 8rem;
+
+  display: flex;
+  align-items: center;
 }

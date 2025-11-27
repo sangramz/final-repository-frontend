@@ -1,144 +1,94 @@
-
 import "./hero.css";
 import React, { useState, useEffect, useRef } from "react";
-
 
 const HeroSection = () => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("All");
   const [showResults, setShowResults] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [apiResults, setApiResults] = useState([]);
 
-  const [apiResults, setApiResults] = useState({
-    startups: [],
-    investors: [],
-  });
   const resultsRef = useRef(null);
 
+  /* CLOSE MODAL WHEN CLICK OUTSIDE */
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (resultsRef.current && !resultsRef.current.contains(e.target)) {
+        setShowResults(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-  const [loading, setLoading] = useState(false);
-
-  /* ======================================================
-   * PROXY API CALL → backend (app.emireq.com)
-   * Triggered ONLY when search button clicked OR category changed
-   * ====================================================== */
-  // Close search results when clicking outside
-useEffect(() => {
-  const handleClickOutside = (e) => {
-    // if search results are open and user clicks outside → close
-    if (resultsRef.current && !resultsRef.current.contains(e.target)) {
-      setShowResults(false);
-    }
+  const normalizeResults = (data) => {
+    const result = [];
+    if (Array.isArray(data.startups)) result.push(...data.startups);
+    if (Array.isArray(data.investors)) result.push(...data.investors);
+    return result;
   };
 
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
+  /* LIVE SEARCH */
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      if (!search.trim()) {
+        setApiResults([]);
+        setShowResults(false);
+        return;
+      }
+      fetchQueryResults(search);
+    }, 500);
+    return () => clearTimeout(delay);
+  }, [search]);
 
-  const fetchSearchResults = async (query) => {
-    if (!query) {
-      setApiResults({ startups: [], investors: [] });
-      setShowResults(true);
-      return;
-    }
-
+  const fetchQueryResults = async (query) => {
     setLoading(true);
+    setSelectedOption("All");
     setShowResults(true);
 
-    const endpoint = `/search/?q=${query}`;
-    console.log(
-      `%c[PROXY REQUEST] → ${endpoint}`,
-      "color:#8A2BE2;font-weight:bold;"
-    );
-
     try {
-      const res = await fetch(endpoint);
-      const data = await res.json();
-
-      console.log(
-        "%c[PROXY SUCCESS] Response:",
-        "color:#4CAF50;font-weight:bold;",
-        data
-      );
-
-      setApiResults({
-        startups: data.startups || [],
-        investors: data.investors || [],
-      });
+      const response = await fetch(`/search/?q=${query}`);
+      const data = await response.json();
+      setApiResults(normalizeResults(data));
     } catch (err) {
-      console.error(
-        "%c[PROXY ERROR] JSON parse failed:",
-        "color:red;font-weight:bold;",
-        err
-      );
+      console.log("❌ Error Fetching Query:", err);
     }
 
     setLoading(false);
   };
 
-  /* ======================================================
-   * HANDLE SEARCH TEXT INPUT (no fetching)
-   * ====================================================== */
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-  };
+  const fetchCategoryResults = async (category) => {
+    setSearch("");
+    setLoading(true);
+    setShowResults(true);
 
-  /* ======================================================
-   * SEARCH BUTTON CLICK
-   * ====================================================== */
-  const handleSearchClick = () => {
-    fetchSearchResults(search);
-  };
-
-  /* ======================================================
-   * CATEGORY SELECT
-   * ====================================================== */
-  const handleSelect = (item) => {
-    setSelectedOption(item);
-    setOpen(false);
-
-    // Re-fetch results if search text exists
-    if (search.trim() !== "") {
-      fetchSearchResults(search);
+    try {
+      const response = await fetch(`/search/?type=${category.toLowerCase()}`);
+      const data = await response.json();
+      setApiResults(normalizeResults(data));
+    } catch (err) {
+      console.log("❌ Error Fetching Category:", err);
     }
+    setLoading(false);
   };
 
-  /* ======================================================
-   * MERGE + FILTER RESULTS
-   * ====================================================== */
-  const mergeFilteredResults = () => {
-    let all = [];
-
-    apiResults.startups.forEach((i) =>
-      all.push({ ...i, category: "startups" })
-    );
-    apiResults.investors.forEach((i) =>
-      all.push({ ...i, category: "investors" })
-    );
-
-    if (selectedOption === "startups") {
-      all = all.filter((i) => i.category === "startups");
-    }
-
-    if (selectedOption === "investors") {
-      all = all.filter((i) => i.category === "investors");
-    }
-
-    return all;
+  const handleResultClick = (item) => {
+    setSearch(item.name);
+    setShowResults(false);
+    setSelectedOption("All");
   };
-
-  const finalResults = mergeFilteredResults();
 
   return (
     <section className="hero">
-      {/* TITLE */}
+
       <h1 className="hero-title">
         Tokenize real-world <br /> opportunities
       </h1>
 
       <p className="hero-subtitle">
         Emireq empowers entrepreneurs to tokenize equity, revenue, and project
-        shares — connecting them with<br /> investors across the globe.
+        shares — connecting them with <br /> investors across the globe.
       </p>
 
       <div className="hero-buttons">
@@ -146,62 +96,60 @@ useEffect(() => {
         <button className="btn-secondary">Explore Marketplace</button>
       </div>
 
-      {/* SEARCH BAR */}
+      {/* SEARCH MODULE */}
       <div className="hero-search-container">
-        <div className="hero-search">
+        <div className="hero-search search-group"> {/* NEW WRAPPER */}
+
           <input
             type="text"
             placeholder="Search startups, tokens, or investors..."
             value={search}
-            onChange={handleSearchChange}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setShowResults(true);
+            }}
           />
 
-          {/* DROPDOWN */}
-          <div className="custom-select">
+          {/* MATCH WIDTH DROPDOWN */}
+          <div className="custom-select full-width">
             <div
               className="custom-select-trigger"
               onClick={() => setOpen(!open)}
             >
-              {selectedOption}
-              <span className="arrow">▾</span>
+              {selectedOption} <span className="arrow">▾</span>
             </div>
 
             {open && (
               <div className="custom-options">
-                {["All", "startups", "investors"].map((item) => (
+                {["All", "Startups", "Investors"].map((option) => (
                   <div
-                    key={item}
+                    key={option}
                     className="custom-option"
-                    onClick={() => handleSelect(item)}
+                    onClick={() => {
+                      setSelectedOption(option);
+                      setOpen(false);
+                      if (option !== "All") fetchCategoryResults(option);
+                      else setApiResults([]);
+                    }}
                   >
-                    {item === "All"
-                      ? "All"
-                      : item.charAt(0).toUpperCase() + item.slice(1)}
+                    {option}
                   </div>
                 ))}
               </div>
             )}
           </div>
 
-          <button className="btn-search" onClick={handleSearchClick}>
-            Search
-          </button>
+          <button className="btn-search" disabled>Search</button>
         </div>
 
-        {/* RESULTS */}
+        {/* RESULTS PANEL */}
         {showResults && (
-           <div className="search-results" ref={resultsRef}>
-            {/* AI DISCOVERY CARD */}
+          <div className="search-results" ref={resultsRef}>
+
+            {/* ⭐ AI DISCOVERY CARD (RESTORED) */}
             <div className="ai-discovery-card">
               <div className="ai-icon">
-                <svg
-                  width="26"
-                  height="26"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#4c6fff"
-                  strokeWidth="2"
-                >
+                <svg width="26" height="26" stroke="#4c6fff" fill="none" strokeWidth="2">
                   <path d="M12 3v2" />
                   <path d="M12 19v2" />
                   <path d="M5 5l1.5 1.5" />
@@ -211,50 +159,40 @@ useEffect(() => {
                   <circle cx="12" cy="12" r="4" />
                 </svg>
               </div>
-
-              <div className="ai-details">
+              <div>
                 <h3 className="ai-title">AI-Powered Discovery</h3>
                 <p className="ai-description">
-                  Let our AI analyze market trends and suggest personalized
-                  investment opportunities
+                  Smart matching investors & startups with trends and scoring.
                 </p>
               </div>
             </div>
 
             <div className="divider"></div>
 
-            {/* HEADER */}
             <div className="search-results-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" stroke="#52627a">
-                <polyline points="3 17 9 11 13 15 21 7"></polyline>
-                <polyline points="14 7 21 7 21 14"></polyline>
-              </svg>
-              <span>TRENDING SEARCHES</span>
+              {selectedOption === "All" ? "Search Results" : selectedOption}
             </div>
 
-            {/* LOADING SKELETON */}
             {loading && (
               <div className="skeleton-wrapper">
-                <div className="skeleton-line"></div>
-                <div className="skeleton-line"></div>
-                <div className="skeleton-line"></div>
-                <div className="skeleton-line"></div>
+                {[1,2,3,4].map(i => <div className="skeleton-line" key={i}></div>)}
               </div>
             )}
 
-            {/* EMPTY STATE */}
-            {!loading && finalResults.length === 0 && (
-              <div className="no-results">No matching results found.</div>
+            {!loading && apiResults.length === 0 && (
+              <div className="no-results">No results found.</div>
             )}
 
-            {/* RESULTS LIST */}
             {!loading &&
-              finalResults.map((item) => (
-                <div className="trending-item" key={item.id}>
+              apiResults.map((item) => (
+                <div
+                  className="trending-item"
+                  key={item.id}
+                  onClick={() => handleResultClick(item)}
+                  style={{ cursor: "pointer" }}
+                >
                   <span>{item.name}</span>
-                  <span className="trend-positive">
-                    {item.score ?? item.trend ?? ""}
-                  </span>
+                  <span className="trend-positive">{item.score ?? ""}</span>
                 </div>
               ))}
           </div>

@@ -1,72 +1,76 @@
+import React, { useEffect } from "react";
+import { motion } from "framer-motion";
 
-import BuySellTokens from "./BuySellTokens.jsx";
+import TokenizeHero from "./TokenizeHero.jsx";
 import EmireqToken from "./EmireqToken.jsx";
-import Footer from "./Footer.jsx";
-import HowTokenizationWorks from "./HowTokenizationWorks.jsx";
 import Marketplace from "./MarketPlaceSection.jsx";
-import TokenizeHero from "./TokenizeHero";
+import BuySellTokens from "./BuySellTokens.jsx";
+import HowTokenizationWorks from "./HowTokenizationWorks.jsx";
+import Footer from "../Footer.jsx";
 
 export default function Tokenize() {
-  
+
+  // Same pinch-zoom restriction logic as App.jsx
+  useEffect(() => {
+    const preventZoom = (e) => {
+      if (e.ctrlKey || e.metaKey || e.touches?.length > 1) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", preventZoom, { passive: false });
+    window.addEventListener("keydown", preventZoom);
+    document.addEventListener("gesturestart", preventZoom);
+    document.addEventListener("gesturechange", preventZoom);
+
+    return () => {
+      window.removeEventListener("wheel", preventZoom);
+      window.removeEventListener("keydown", preventZoom);
+      document.removeEventListener("gesturestart", preventZoom);
+      document.removeEventListener("gesturechange", preventZoom);
+    };
+  }, []);
+
+  // Same animation config as App.jsx
+  const fadeVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+    exit: { opacity: 0, y: -10, transition: { duration: 0.25 } },
+  };
+
   return (
-    <>
-      {/* Inline injected font-face */}
-      <style>
-        {`
-          @font-face {
-            font-family: 'URWGeometric';
-            src: url('/fonts/URWGeometricRegular.otf') format('opentype');
-            font-weight: 400;
-            font-style: normal;
-          }
-        `}
-      </style>
+    <div className="no-horizontal-scroll">
+      <div className="scale-wrapper">
+        <div className="container">
 
-      {/* FULL PLAIN SCREEN */}
-      <div
-        style={{
-          width: "100%",
-          minHeight: "100vh",
-          padding: "60px 20px",
-          boxSizing: "border-box",
-          background: "#ffffff",
-          fontFamily: "URWGeometric, DM Sans, sans-serif",
-      
-          
-        }}
-      >
-     
+          <motion.div
+            key="tokenize-screen"
+            variants={fadeVariant}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10rem", // Global vertical spacing rhythm
+              width: "100%",
+              height: "auto"
+            }}
+          >
+            <TokenizeHero />
+            <EmireqToken />
+            <Marketplace />
+            <BuySellTokens />
+            <HowTokenizationWorks />
 
-   
-        {/* MAIN AREA - plain, responsive */}
-        <div
-          style={{
-            width: "100%",
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "20px 0",
-            fontSize: "26px",
-            fontWeight: 500,
-            textAlign: "center",
-          }}
-        >
-       <TokenizeHero/>
-         <div style={{marginTop:"10rem"}}></div>
-        
-    <EmireqToken/>
-      
-            <div style={{marginTop:"10rem"}}></div>
-          
-            <Marketplace/>
-  
-             <div style={{marginTop:"10rem"}}></div>
-           <BuySellTokens/>
-           <div style={{marginTop:"10rem"}}></div>
-           <HowTokenizationWorks/>
-           <div style={{marginTop:"10rem"}}></div>
-           <Footer/>
+            {/* space so footer doesn't overlap content */}
+            <div style={{ height: "140px" }} />
+
+            <Footer />
+          </motion.div>
+
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,45 +1,92 @@
-.htw-wrapper {
-  padding: 60px 50px;
-  font-family: Inter, sans-serif;
-  text-align: center;
+/* ============================ */
+/* FONT + ROOT VARIABLES        */
+/* ============================ */
+@font-face {
+  font-family: "URWGeometric";
+  src: url("/fonts/URWGeometricRegular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* Heading Section */
+:root {
+  --blue: #2563eb;
+  --navy: #071b4c;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --card: #ffffff;
+  --radius: 16px;
+  --gradient: linear-gradient(90deg, #7dadff 0%, #e5e2a5 100%);
+}
+
+/* ============================ */
+/* MAIN WRAPPER                 */
+/* ============================ */
+.htw-wrapper {
+  padding: 65px 28px;
+  font-family: "URWGeometric", Inter, sans-serif;
+  text-align: center;
+  max-width: 1200px;
+  margin: auto;
+   transform: scale(1.2);
+ 
+}
+
+/* ============================ */
+/* SECTION HEADERS              */
+/* ============================ */
 .htw-tag {
   display: inline-block;
-  color: #8c8c8c;
-  font-size: 13px;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
+  padding: 6px 18px;
+  background: var(--gradient);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  color: #000;
+  margin-bottom: 14px;
 }
 
 .htw-title {
-  font-size: 40px;
-  font-weight: 700;
+  font-size: 42px;
+  font-weight: 500;
   margin-bottom: 10px;
+  line-height: 1.1;
 }
 
 .htw-subtitle {
-  color: #6b7280;
-  font-size: 16px;
-  margin-bottom: 50px;
+  color: var(--muted);
+  font-size: 17px;
+  max-width: 620px;
+  margin: auto;
+  margin-bottom: 55px;
+  line-height: 1.6;
 }
 
-/* Steps */
+/* ============================ */
+/* STEP CARDS                   */
+/* ============================ */
 .htw-steps {
   display: flex;
   justify-content: center;
-  gap: 28px;
+  gap: 32px;
   margin-bottom: 60px;
+  flex-wrap: wrap;
 }
 
 .htw-step-card {
   width: 300px;
-  background: #ffffff;
+  background: var(--card);
   padding: 28px;
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
   text-align: left;
+  transition: 0.25s ease;
+}
+
+.htw-step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 .htw-icon {
@@ -47,9 +94,9 @@
   height: 52px;
   border-radius: 12px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
 .htw-icon.purple { background: #f5f0ff; }
@@ -57,53 +104,60 @@
 .htw-icon.green { background: #ecfdf5; }
 
 .htw-step-card h3 {
-  margin: 0 0 10px 0;
   font-size: 18px;
   font-weight: 600;
+  margin-bottom: 6px;
 }
 
 .htw-step-card p {
-  color: #6b7280;
-  font-size: 14px;
+  color: var(--muted);
+  font-size: 15px;
   line-height: 1.5;
 }
 
-/* CTA Section */
+/* ============================ */
+/* CTA BLOCK                    */
+/* ============================ */
 .htw-cta {
-  margin: 60px auto;
+  margin: 70px auto;
+  background: #0f1e55;
   background: linear-gradient(90deg, #0f1e55 0%, #194bcb 100%);
   border-radius: 22px;
   padding: 50px;
   color: white;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
 }
 
 .htw-cta-left {
-  max-width: 500px;
+  max-width: 520px;
   text-align: left;
 }
 
 .cta-badge {
   background: rgba(255, 255, 255, 0.15);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
+  padding: 7px 18px;
+  border-radius: 18px;
   font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
   margin-bottom: 16px;
-  border: none;
 }
 
 .htw-cta-left h2 {
   font-size: 28px;
-  margin: 0 0 14px 0;
+  margin-bottom: 12px;
 }
 
 .htw-cta-left p {
   color: #e3e7ff;
+  font-size: 16px;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 /* CTA Buttons */
@@ -115,9 +169,9 @@
 .btn-primary {
   background: #f4b400;
   padding: 14px 22px;
-  font-weight: 600;
-  border: none;
   border-radius: 10px;
+  border: none;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -126,31 +180,34 @@
   border: 1px solid #cdd3ea;
   padding: 14px 22px;
   border-radius: 10px;
-  color: white;
   cursor: pointer;
+  color: white;
 }
 
-/* Right mockup image */
+/* CTA Image */
 .htw-cta-right img {
   width: 420px;
-  border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  border-radius: 18px;
+  box-shadow: 0px 20px 55px rgba(0, 0, 0, 0.25);
 }
 
-/* Bottom Features */
+/* ============================ */
+/* BOTTOM FEATURE GRID          */
+/* ============================ */
 .htw-features {
   display: flex;
   justify-content: center;
-  gap: 28px;
+  gap: 32px;
   margin-top: 50px;
+  flex-wrap: wrap;
 }
 
 .htw-feature-card {
   width: 300px;
   background: white;
   padding: 30px;
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
   text-align: center;
 }
 
@@ -161,7 +218,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 16px auto;
+  margin: 0 auto 18px;
 }
 
 .ft-icon.green { background: #ecfdf5; }
@@ -169,13 +226,13 @@
 .ft-icon.purple { background: #f5f0ff; }
 
 .htw-feature-card h3 {
-  margin: 0 0 10px 0;
   font-size: 18px;
   font-weight: 600;
+  margin-bottom: 6px;
 }
 
 .htw-feature-card p {
-  color: #6b7280;
-  font-size: 14px;
+  font-size: 15px;
+  color: var(--muted);
   line-height: 1.5;
 }
