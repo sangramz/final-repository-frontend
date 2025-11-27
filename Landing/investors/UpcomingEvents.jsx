@@ -15,8 +15,9 @@ const IconPeople = () => (
 
 const IconCalendar = () => (
   <svg width="16" height="16" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 
-    1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 
+    <path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 
+    0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 
+    0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 
     16H5V9h14v11z"/>
   </svg>
 );
@@ -34,9 +35,7 @@ function EventCard({ title, attendees, date, location, description }) {
   return (
     <div className="event-card">
       <div className="event-header">
-        <div className="event-icon">
-          <IconBuilding />
-        </div>
+        <div className="event-icon"><IconBuilding /></div>
         <div className="event-title">
           <h3>{title}</h3>
           <span className="event-badge">Upcoming</span>
@@ -85,36 +84,37 @@ export default function UpcomingEvents() {
     },
     {
       title: "Saudi Startup Connect",
-      attendees: "350+ Attendees",
+      attendees: "450+ Attendees",
       date: "March 5, 2025",
       location: "Riyadh Convention Center",
-      description: "Networking event for founders and investors."
+      description: "Networking event for founders and investors with panels."
     },
     {
-      title: "Dubai Investor Summit 2025",
-      attendees: "350+ Attendees",
-      date: "Feb 12, 2025",
-      location: "Dubai World Trade Centre",
-      description: "Meet top VCs, angel networks, and Islamic finance funds."
+      title: "Malaysia Islamic VC Expo",
+      attendees: "500+ Attendees",
+      date: "April 20, 2025",
+      location: "Kuala Lumpur Pavilion",
+      description: "Cross-border halal tokenization and shariah-compliant funding."
     }
   ];
 
   return (
     <div className="events-wrapper">
       <header className="events-header">
-        <div className="header-badge">Upcoming</div>
+        <div className="header-badge">UPCOMING</div>
         <h1>
-          Upcoming <span className="blue">Investors</span>
+          Upcoming <span className="blue">Investor Events</span>
         </h1>
         <p className="header-text">
-          Commodo nec mi id ullamcorper vitae augue neque dis. Nunc lacinia viverra
-          orci diam. Nibh est vitae suspendisse parturient sed lorem eu.
+          Discover exclusive investment meetups, global funding expos,
+          and Web3 founder networking experiences.
         </p>
       </header>
 
-      <div className="events-grid">
+      {/* 🌍 Apple-style scroll gallery */}
+      <div className="events-scroll">
         {events.map((ev, i) => (
-          <EventCard {...ev} key={i} />
+          <EventCard key={i} {...ev} />
         ))}
       </div>
     </div>

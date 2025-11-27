@@ -1,74 +1,95 @@
 import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "./Header.jsx";
 import hero from "./assets/hero.png";
 import "./App.css";
 
-// Always-render About components
 import HeroSection from "./HeroSection.jsx";
 
+const AboutPage = React.lazy(() => import("./about/index.jsx"));
 const CategorySelector = React.lazy(() => import("./CategorySelector.jsx"));
 const CryptoInsights = React.lazy(() => import("./CryptoInsightsUpdate.jsx"));
-const PortfolioSectionUpdated = React.lazy(() =>
-  import("./PortfolioSectionUpdated.jsx")
-);
-const BusinessListingUpdated = React.lazy(() =>
-  import("./BusinessListingUpdated.jsx")
-);
-const BlogListingUpdated = React.lazy(() =>
-  import("./BlogListingUpdated.jsx")
-);
+const PortfolioSectionUpdated = React.lazy(() => import("./PortfolioSectionUpdated.jsx"));
+const BusinessListingUpdated = React.lazy(() => import("./BusinessListingUpdated.jsx"));
+const BlogListingUpdated = React.lazy(() => import("./BlogListingUpdated.jsx"));
 const Footer = React.lazy(() => import("./Footer.jsx"));
 
-// Pages (use imports directly)
 import EventsPage from "./events/index.jsx";
 import Tokenize from "./tokenize/index.jsx";
 import MarketPlace from "./marketplace/index.jsx";
 import InvestorHub from "./investors/index.jsx";
 
 export default function App() {
-  const [activeScreen, setActiveScreen] = useState("about");
 
-  // Zoom lock
+  const [activeScreen, setActiveScreen] = useState(null); // Default = Home
+
+  // ---- Prevent Zoom ----
   useEffect(() => {
-    const setLockedZoom = () => {
-      const lockedScale = 0.95;
-      document.body.style.zoom = lockedScale;
-      document.documentElement.style.zoom = lockedScale;
-
-      document.body.style.transform = `scale(${lockedScale})`;
-      document.body.style.transformOrigin = "top center";
-      document.body.style.width = `${100 / lockedScale}%`;
-    };
-
-    setLockedZoom();
-
-    const blockZoom = (e) => {
+    const preventZoom = (e) => {
       if (e.ctrlKey || e.metaKey) e.preventDefault();
-      setLockedZoom();
     };
 
-    window.addEventListener("wheel", blockZoom, { passive: false });
-    window.addEventListener("keydown", blockZoom);
-    window.addEventListener("resize", setLockedZoom);
+    window.addEventListener("wheel", preventZoom, { passive: false });
+    window.addEventListener("keydown", preventZoom, { passive: false });
 
-    document.addEventListener(
-      "touchstart",
-      (e) => {
-        if (e.touches.length > 1) e.preventDefault();
-      },
-      { passive: false }
-    );
+    const preventGesture = (e) => e.preventDefault();
+    document.addEventListener("gesturestart", preventGesture);
+    document.addEventListener("gesturechange", preventGesture);
 
     return () => {
-      window.removeEventListener("wheel", blockZoom);
-      window.removeEventListener("keydown", blockZoom);
-      window.removeEventListener("resize", setLockedZoom);
+      window.removeEventListener("wheel", preventZoom);
+      window.removeEventListener("keydown", preventZoom);
+      document.removeEventListener("gesturestart", preventGesture);
+      document.removeEventListener("gesturechange", preventGesture);
     };
   }, []);
 
-  // Render active screen using switch
+  // ---- Scroll top on page change ----
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [activeScreen]);
+
+
+  // ---- Page Fade Animation ----
+  const fadeVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+    exit: { opacity: 0, y: -10, transition: { duration: 0.25 } },
+  };
+
+
+  // ---- Render Screens ----
   const renderActiveScreen = () => {
+
+    // HOME PAGE (DEFAULT)
+    if (!activeScreen) {
+      return (
+        <>
+          <HeroSection />
+
+          <img
+            src={hero}
+            alt="Hero"
+            className="hero-image"
+          />
+
+          <React.Suspense fallback={<div style={{ color: "white" }}>Loading...</div>}>
+            <CategorySelector />
+            <CryptoInsights />
+            <PortfolioSectionUpdated />
+            <BusinessListingUpdated />
+            <BlogListingUpdated />
+            <div style={{ marginTop: "19rem" }}></div>
+            <Footer />
+          </React.Suspense>
+        </>
+      );
+    }
+
+    // OTHER SCREENS
     switch (activeScreen) {
+      case "about":
+        return <AboutPage />;
       case "marketplace":
         return <MarketPlace />;
       case "tokenize":
@@ -78,103 +99,35 @@ export default function App() {
       case "events":
         return <EventsPage />;
       default:
-        return null; // about page handled separately
+        return null;
     }
   };
 
+
   return (
-    <div
-      className="no-horizontal-scroll"
-      style={{
-        width: "100%",
-        maxWidth: "100%",
-        overflowX: "hidden",
-        overflowY: "auto",
-        height: "100vh",
-        position: "relative",
-      }}
-    >
-      <div
-        style={{
-          transform: "scale(0.98)",
-          transformOrigin: "top center",
-          width: "100%",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            paddingLeft: "10rem",
-            paddingRight: "10rem",
-            margin: "4rem 0",
-            minHeight: "100vh",
-          }}
-        >
-          {/* Header */}
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: "2rem",
-            }}
-          >
-            <div style={{ width: "100%", maxWidth: "1280px" }}>
-              <Header setActiveScreen={setActiveScreen} />
-            </div>
+    <div className="no-horizontal-scroll">
+      <div className="scale-wrapper">
+        <div className="container">
+
+          {/* Header Always Visible */}
+          <div className="header-background">
+            <Header setActiveScreen={setActiveScreen} />
           </div>
 
-          <main
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "100%",
-              alignItems: "center",
-            }}
-          >
-            {/* ABOUT SCREEN */}
-            {activeScreen === "about" && (
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: "1280px",
-                  transform: "scale(1.15) translateX(-1.5rem)",
-                  transformOrigin: "top left",
-                  marginBottom: "5rem",
-                }}
-              >
-                <HeroSection />
+          {/* Animated Page Wrapper */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeScreen || "home"}
+              variants={fadeVariant}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="screen"
+            >
+              {renderActiveScreen()}
+            </motion.div>
+          </AnimatePresence>
 
-                <img
-                  src={hero}
-                  alt="Hero"
-                  style={{
-                    width: "100%",
-                    borderRadius: "20px",
-                    marginTop: 32,
-                    objectFit: "cover",
-                  }}
-                />
-
-                <React.Suspense fallback={null}>
-                  <CategorySelector />
-                  <CryptoInsights />
-                  <PortfolioSectionUpdated />
-                  <BusinessListingUpdated />
-                  <BlogListingUpdated />
-                  <Footer />
-                </React.Suspense>
-              </div>
-            )}
-
-            {/* OTHER SCREENS */}
-            {activeScreen !== "about" && (
-              <div style={{ width: "100%", maxWidth: "1280px" }}>
-                {renderActiveScreen()}
-              </div>
-            )}
-          </main>
         </div>
       </div>
     </div>

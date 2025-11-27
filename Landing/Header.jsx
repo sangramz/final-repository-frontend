@@ -1,49 +1,78 @@
 import React from "react";
+import { motion } from "framer-motion";
 import "./header.css";
 import logo from "./assets/logo.png";
 
-const Header = ({setActiveScreen}) => {
+const Header = ({ setActiveScreen }) => {
   return (
-    <header className="header">
-      <div className="header-container">
+    <motion.header 
+      className="header"
+      initial={{ opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.38, ease: "easeOut" }}
+    >
+      <div className="header-inner">
 
-        {/* COLUMN 1 — LOGO */}
-        <div className="col logo-col">
+        {/* LOGO */}
+        <motion.div 
+          className="col logo-col"
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.15, duration: 0.35 }}
+        >
           <img src={logo} alt="emireq logo" className="logo" />
-        </div>
+        </motion.div>
 
-        {/* COLUMN 2 — NAV LINKS */}
-<nav className="col nav-col">
-  <a href="#" onClick={(e) => { e.preventDefault(); setActiveScreen("marketplace"); }}>
-    Marketplace
-  </a>
+        {/* NAVIGATION LINKS */}
+        <motion.nav 
+          className="col nav-col"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.22, duration: 0.4 }}
+        >
+          {["Marketplace", "Tokenize", "Investors", "Events", "About"].map((label) => (
+            <motion.a
+              key={label}
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveScreen(label.toLowerCase());
+              }}
+              whileHover={{ scale: 1.07 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: "spring", stiffness: 240 }}
+            >
+              {label}
+            </motion.a>
+          ))}
+        </motion.nav>
 
-  <a href="#" onClick={(e) => { e.preventDefault(); setActiveScreen("tokenize"); }}>
-    Tokenize
-  </a>
+        {/* BUTTONS */}
+        <motion.div 
+          className="col btn-col"
+          initial={{ opacity: 0, x: 12 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3, duration: 0.35 }}
+        >
+          <motion.button 
+            className="btn-startups"
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            Startups
+          </motion.button>
 
-  <a href="#" onClick={(e) => { e.preventDefault(); setActiveScreen("investors"); }}>
-    Investors
-  </a>
-
-  <a href="#" onClick={(e) => { e.preventDefault(); setActiveScreen("events"); }}>
-    Events
-  </a>
-
-  <a href="#" onClick={(e) => { e.preventDefault(); setActiveScreen("about"); }}>
-    About
-  </a>
-</nav>
-
-
-        {/* COLUMN 3 — BUTTONS */}
-        <div className="col btn-col">
-          <button className="btn-startups">Startups</button>
-          <button className="btn-investors">Investors</button>
-        </div>
+          <motion.button 
+            className="btn-investors"
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            Investors
+          </motion.button>
+        </motion.div>
 
       </div>
-    </header>
+    </motion.header>
   );
 };
 

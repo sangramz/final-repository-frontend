@@ -1,198 +1,192 @@
-// File: CryptoInsights.jsx
-import React, { useState } from "react";
-import "./CryptoInsights.css";
+import React from "react";
+import { motion } from "framer-motion";
+import "./CryptoInsightsUpdate.css";
+import { FiSearch, FiSun, FiBell, FiChevronUp, FiChevronDown, FiBarChart2 } from "react-icons/fi";
+import { FaUserCircle } from "react-icons/fa";
+import { SiBitcoin, SiEthereum, SiRipple } from "react-icons/si";
 
-export default function CryptoInsightsUpdate() {
-  const [showUSD, setShowUSD] = useState(true);
+const REVEAL = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.12, duration: 0.45, ease: "easeOut" }
+  })
+};
 
-  const stats = [
-    { label: "Bitcoin Dominance", value: "41.5%" },
-    { label: "Total Market Capitalization", value: "$2.5 T" },
-    { label: "24-Hour Trading Volume", value: "$300 B" },
-  ];
+const topCoins = [
+  { name: "Aurivox", code: "AVX", price: "$23,738", change: "+14.67%", color: "#F7D999", trend: "up" },
+  { name: "Eminar", code: "EMN", price: "$23,738", change: "-14.67%", color: "#D1E9FF", trend: "down" },
+  { name: "Xenara", code: "XNR", price: "$23,738", change: "+14.67%", color: "#DFF7E6", trend: "up" }
+];
 
-  const topCoins = [
-    {
-      iconClass: "coin-icon coin-amber",
-      name: "Aurivox",
-      symbol: "AVX",
-      price: "$23,738",
-      change: "+14.67%",
-      changeUp: true,
-      marketcap: "$213.8M",
-    },
-    {
-      iconClass: "coin-icon coin-indigo",
-      name: "Eminar",
-      symbol: "EMN",
-      price: "$23,738",
-      change: "-14.67%",
-      changeUp: false,
-      marketcap: "$213.8M",
-    },
-    {
-      iconClass: "coin-icon coin-emerald",
-      name: "Xenara",
-      symbol: "XNR",
-      price: "$23,738",
-      change: "+1.32%",
-      changeUp: true,
-      marketcap: "$245.8M",
-    },
-  ];
+const tableData = [
+  { name: "Aurivox", code: "AVX", price: "$200,000", changePct: "-1.32%", changeDollar: "$0.057", marketcap: "$213.8M", trend: "down", icon: <SiBitcoin /> },
+  { name: "Eminar", code: "EMN", price: "$200,000", changePct: "+1.32%", changeDollar: "$0.146", marketcap: "$245.8M", trend: "up", icon: <SiEthereum /> },
+  { name: "Xenara", code: "XNR", price: "$200,000", changePct: "+1.32%", changeDollar: "$0.450", marketcap: "$245.8M", trend: "up", icon: <SiRipple /> }
+];
 
+export default function CryptoInsights() {
   return (
-    <section className="crypto-section" aria-labelledby="crypto-heading">
-      {/* Outer violet rounded frame (new CSS expects crypto-panel-outer) */}
-      <div className="crypto-panel-outer">
-        {/* Inner white panel */}
-        <div className="crypto-panel" role="region" aria-label="crypto panel">
-          <div className="crypto-frame">
-            {/* Title */}
-            <div className="crypto-title">
-              <div className="crypto-label">Crypto Insights</div>
-              <h2 id="crypto-heading" className="crypto-heading">
-                Insights into the Crypto Landscape
-              </h2>
-              <p className="crypto-subtitle">
-                Stay updated with real-time market data, trends, and analysis
-                across the cryptocurrency ecosystem.
-              </p>
-            </div>
+    <motion.section
+      className="ci-wrapper"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      <div className="ci-inner">
+        
+        <motion.span className="ci-pill" {...SPILL}>
+          Crypto Insights
+        </motion.span>
 
-            {/* Fun facts / stats */}
-            <div className="fun-facts" role="list" aria-label="crypto stats">
-              {stats.map((s, i) => (
-                <div className="fun-fact" role="listitem" key={i}>
-                  <p className="stat">{s.value}</p>
-                  <p className="label">{s.label}</p>
-                </div>
-              ))}
-            </div>
+        <motion.h1 className="ci-title" {...SPILL}>
+          Insights into the Crypto Landscape
+        </motion.h1>
 
-            {/* Top metric cards row */}
-            <div className="metrics-row" role="list" aria-label="top coins">
-              {topCoins.map((m, i) => (
-                <div className="metric-card card-width-346" key={i} role="listitem" aria-label={`${m.name} card`}>
-                  <div className="metric-header">
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <div className={m.iconClass} aria-hidden>
-                        <span className="coin-abbr">{m.symbol}</span>
-                      </div>
-                      <div style={{ minWidth: 0 }}>
-                        <div className="metric-title">{m.name}</div>
-                        <div className="small-muted">{m.symbol}</div>
-                      </div>
-                    </div>
+        <motion.p className="ci-sub" {...SPILL}>
+          Stay updated with real-time market data, trends, and analysis across the cryptocurrency ecosystem.
+        </motion.p>
 
-                    <div style={{ marginLeft: "auto" }}>
-                      <div className={`change-pill ${m.changeUp ? "positive" : "negative"}`}>{m.change}</div>
-                    </div>
-                  </div>
+        {/* Metrics */}
+        <div className="ci-metrics">
+          {["41.5%", "$2.5 T", "$300 B"].map((d, i) => (
+            <motion.div key={i} className="metric" custom={i} variants={REVEAL} initial="hidden" animate="visible">
+              <div className="metric-value">{d}</div>
+              <div className="metric-label">
+                {i === 0 && "Bitcoin Dominance"}
+                {i === 1 && "Total Market Capitalization"}
+                {i === 2 && "24-Hour Trading Volume"}
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-                  <div className="metric-price-row" style={{ marginTop: 12 }}>
-                    <div className="metric-price">{m.price}</div>
-                    <div style={{ marginLeft: 12 }} className="metric-date small-muted">
-                      Tuesday, 14th October 2025
-                    </div>
+        {/* Dashboard */}
+        <motion.div className="dashboard" {...SPILL}>
+          {/* Header */}
+          <div className="dashboard-top">
+            <div className="dashboard-title">Investment Portfolio Dashboard</div>
 
-                    {/* sparkline placeholder on the right */}
-                    <div style={{ marginLeft: "auto" }} className="sparkline" aria-hidden>
-                      {/* Keep this as placeholder or render an inline svg/sparkline here */}
-                      <svg width="110" height="48" viewBox="0 0 110 48" fill="none" aria-hidden>
-                        <path d="M6 34 C26 14 46 30 66 22 C86 14 100 18 104 16" stroke={m.changeUp ? "#10B981" : "#EF4444"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                      </svg>
-                    </div>
-                  </div>
+            <div className="dashboard-actions">
+              <motion.button className="icon-btn" whileTap={{ scale: 0.9 }}><FiSun /></motion.button>
 
-                  <hr className="hr" />
-
-                  <div className="small-muted">
-                    Market cap <strong style={{ color: "#121212" }}>{m.marketcap}</strong>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Market overview / table */}
-            <div className="market-overview">
-              <div className="market-header">
-                <div className="title">Market Overview</div>
-                <div className="desc">Comprehensive token statistics trading information</div>
+              <div className="search">
+                <FiSearch className="search-icon" />
+                <input className="search-input" placeholder="Search coins, tickers..." />
               </div>
 
-              <div className="market-table-wrap" role="table" aria-label="market table">
-                {/* inner wrapper expected by CSS */}
-                <div className="market-table-inner">
-                  <table className="market-table" role="grid" aria-label="Top tokens">
-                    <thead>
-                      <tr>
-                        <th className="table-col-name">Name</th>
-                        <th className="table-col-price">Price</th>
-                        <th className="table-col-change">Change(%)</th>
-                        <th className="table-col-change-dollar">Change($)</th>
-                        <th className="table-col-marketcap">Marketcap</th>
-                        <th className="table-col-trade">Trade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {topCoins.map((c, idx) => (
-                        <tr key={idx}>
-                          <td>
-                            <div className="coin-cell">
-                              <div className={`coin-icon-small ${c.iconClass.replace("coin-icon ", "")}`} aria-hidden>
-                                <span className="coin-abbr">{c.symbol}</span>
-                              </div>
-                              <div>
-                                <div className="font-semibold">{c.name}</div>
-                                <div className="coin-sub small-muted">{c.symbol}</div>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td>{c.price}</td>
-
-                          <td>
-                            <div className={`change-pill-sm ${c.changeUp ? "up" : "down"}`}>
-                              {/* small arrow (svg) */}
-                              {c.changeUp ? (
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                                  <path d="M5 14L11 8L19 16" stroke="#059669" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                              ) : (
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                                  <path d="M19 10L13 16L5 8" stroke="#DC2626" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                              )}
-                              <span>{c.changeUp ? "+1.32%" : "-1.32%"}</span>
-                            </div>
-                          </td>
-
-                          <td>
-                            <div className={`change-pill-sm ${c.changeUp ? "up" : "down"}`}>
-                              <span>{c.changeUp ? "+$0.148" : "-$0.057"}</span>
-                            </div>
-                          </td>
-
-                          <td className="marketcap">{c.marketcap}</td>
-
-                          <td style={{ textAlign: "right" }}>
-                            <button className="trade-btn" aria-label={`Trade ${c.name}`}>Trade</button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="market-note">
-                Market data is updated in real-time. Prices are for informational purposes only and may vary across exchanges.
-              </div>
+              <motion.button className="icon-btn" whileTap={{ scale: 0.9 }}><FiBell /></motion.button>
+              <FaUserCircle className="profile" />
             </div>
           </div>
-        </div>
+
+          {/* Mini Cards */}
+          <div className="mini-cards">
+            {topCoins.map((coin, i) => (
+              <motion.article
+                key={i}
+                className="mini-card"
+                custom={i}
+                variants={REVEAL}
+                initial="hidden"
+                whileInView="visible"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 180 }}
+                viewport={{ once: true }}
+              >
+                <div className="mini-header">
+                  <div className="mini-left">
+                    <div className="badge-icon" style={{ background: coin.color }}>{coin.code[0]}</div>
+                    <div className="badge-text">
+                      <div className="coin-name">{coin.name}</div>
+                      <div className="coin-code">{coin.code}</div>
+                    </div>
+                  </div>
+                  <div className={`mini-change ${coin.trend}`}>{coin.change}</div>
+                </div>
+
+                <div className="mini-price">{coin.price}</div>
+
+                <div className="mini-graph">
+                  <svg viewBox="0 0 100 40" className="spark">
+                    {coin.trend === "up"
+                      ? <polyline points="0,32 20,28 40,22 60,14 80,8 100,6" />
+                      : <polyline points="0,10 20,14 40,20 60,26 80,32 100,34" />}
+                  </svg>
+                </div>
+
+                <div className="mini-footer">
+                  <span>Tue, 14 Oct 2025</span>
+                  <span className="mini-link">$23,738</span>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          {/* Market Overview */}
+          <motion.div className="market-heading" {...SPILL}>
+            <h3 className="market-heading-title"><FiBarChart2 className="mh-ico" /> Market Overview</h3>
+            <p className="mh-sub">Comprehensive token statistics trading information</p>
+          </motion.div>
+
+          {/* Table */}
+          <motion.div className="table-wrap" {...SPILL}>
+            <table className="market-table">
+              <thead>
+                <tr>
+                  <th>Name</th><th>Price</th><th>Change(%)</th><th>Change($)</th><th>Marketcap</th><th>Trade</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {tableData.map((row, i) => (
+                  <motion.tr
+                    key={i}
+                    whileHover={{ backgroundColor: "#fafafa" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <td>
+                      <div className="row-name">
+                        <div className="row-icon">{row.icon}</div>
+                        <div>
+                          <div className="row-title">{row.name}</div>
+                          <div className="row-sub">{row.code}</div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>{row.price}</td>
+
+                    <td className={`trend ${row.trend}`}>
+                      {row.trend === "up" ? <FiChevronUp /> : <FiChevronDown />}
+                      {row.changePct}
+                    </td>
+
+                    <td className={`trend ${row.trend}`}>{row.changeDollar}</td>
+
+                    <td>{row.marketcap}</td>
+
+                    <td><motion.button className="trade-btn" whileTap={{ scale: 0.9 }}>Trade</motion.button></td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </motion.div>
+
+          <motion.div className="dashboard-note" {...SPILL}>
+            Market data updates in real-time. Values may vary per exchange.
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
+
+const SPILL = {
+  initial: { opacity: 0, y: 15 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.55 }
+};

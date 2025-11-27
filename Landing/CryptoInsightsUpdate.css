@@ -1,308 +1,368 @@
+/* ==========================================
+   FINTECH CLEAN + POLISHED VERSION
+   (Same design — just refined and consistent)
+========================================== */
+
+/* -------- ROOT TOKENS -------- */
 :root {
-  --muted: #818181;
-  --muted2: #999;
-  --shadow: 0 8px 30px rgba(0,0,0,0.08);
-  --radius: 18px;
-  --border: #eaeaea;
-  --accent: #0a1f4d;
-}
-/* --------------------------------------------- */
-/* URW GEOMETRIC — REGULAR (400)                 */
-/* --------------------------------------------- */
-@font-face {
-  font-family: "URW Geometric";
-  src: url("/fonts/URWGeometricRegular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-soft: 0 6px 18px rgba(0,0,0,0.05);
+  --shadow-card: 0 10px 30px rgba(0,0,0,0.07);
+
+  --text-primary: #0a1f4d;
+  --text-muted: #818181;
+  --text-light: #999;
+
+  --border: #e6e6e6;
+  --bg-light: #f8f9fc;
+  --accent: #2b6ef6;
+
+  --green: #2cab3d;
+  --green-bg: #dff7e6;
+  --red: #ff4444;
+  --red-bg: #ffe5e5;
+  --gold: #f6b32b;
 }
 
-/* WRAPPER */
+/* ---------------------------- */
+/* GLOBAL SECTION FONT SCOPE    */
+/* ---------------------------- */
+.ci-wrapper, 
+.ci-wrapper * {
+  font-family: "URW Geometric", sans-serif;
+  font-weight: 400;
+}
+
+/* ---------------------------- */
+/* WRAPPER STRUCTURE            */
+/* ---------------------------- */
 .ci-wrapper {
-  padding: 60px 40px;
+  width: 100%;
   display: flex;
   justify-content: center;
+  padding: 60px 40px;
 }
 
 .ci-inner {
-  max-width: 1100px;
   width: 100%;
+  max-width: 1100px;
   text-align: center;
 }
 
-/* PILL */
+/* ---------------------------- */
+/* TOP LABEL + TITLE + SUBTEXT */
+/* ---------------------------- */
+
 .ci-pill {
   background: #eef6ff;
-  color: #2b6ef6;
+  color: var(--accent);
   padding: 10px 22px;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 18px;
-  display: inline-block;
-  margin-bottom: 18px;
-}
-/* Apply URW Geometric to this section only */
-.ci-wrapper, 
-.ci-wrapper * {
-  font-family: "URW Geometric", sans-serif !important;
-  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 16px;
 }
 
-/* TITLE */
 .ci-title {
-  font-size: 52px;
+  font-size: 50px;
   font-weight: 700;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
+  line-height: 1.1;
+  color: var(--text-primary);
 }
 
-/* SUB */
 .ci-sub {
-  color: var(--muted);
-  font-size: 20px;
+  font-size: 18px;
+  color: var(--text-muted);
   max-width: 620px;
   margin: 0 auto 40px;
+  line-height: 1.5;
 }
 
-/* METRICS */
+/* ---------------------------- */
+/* METRICS ROW                 */
+/* ---------------------------- */
 .ci-metrics {
   display: flex;
   justify-content: center;
-  gap: 70px;
+  gap: 60px;
   margin-bottom: 50px;
 }
 
 .metric-value {
-  font-size: 42px;
+  font-size: 40px;
+  color: var(--gold);
   font-weight: 700;
-  color: #f6b32b;
 }
 
 .metric-label {
-  font-size: 18px;
-  color: var(--muted2);
+  font-size: 16px;
+  color: var(--text-light);
+  margin-top: 6px;
 }
 
-/* DASHBOARD CARD */
+/* ---------------------------- */
+/* MAIN DASHBOARD CARD         */
+/* ---------------------------- */
 .dashboard {
-  padding: 28px;
   background: #fff;
-  border-radius: 26px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
-  border: 1px solid #efefef;
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
 }
 
-/* TOP ROW */
+/* top bar */
 .dashboard-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 26px;
 }
 
-/* ACTIONS */
+.dashboard-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* actions */
 .dashboard-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .icon-btn {
-  background: #f8f8f8;
-  padding: 10px;
-  border-radius: 12px;
+  background: var(--bg-light);
   border: none;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+}
+
+.profile {
+  font-size: 30px;
   cursor: pointer;
 }
 
-/* SEARCH */
+/* search */
 .search {
-  background: #f3f6fa;
+  background: var(--bg-light);
   padding: 10px 14px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
-/* MINI CARDS */
+.search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+/* ---------------------------- */
+/* MINI COIN CARDS             */
+/* ---------------------------- */
 .mini-cards {
   display: flex;
   gap: 22px;
-  margin-top: 26px;
 }
 
 .mini-card {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 18px;
+  flex: 1;
+  background: white;
+  padding: 22px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
-  width: 100%;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-soft);
+  transition: 0.25s;
 }
 
-/* MINI HEADER */
+.mini-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+
+/* header */
 .mini-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.mini-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* COIN ICON */
 .badge-icon {
   width: 42px;
   height: 42px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
 }
 
-/* COIN NAME/TEXT */
-.coin-name {
-  font-weight: 700;
-  font-size: 18px;
-}
-
-.coin-code {
-  font-size: 14px;
-  color: var(--muted2);
-}
-
-/* CHANGE BADGE */
+/* change pill */
 .mini-change {
-  padding: 5px 10px;
+  padding: 6px 12px;
+  font-weight: 700;
   font-size: 14px;
-  border-radius: 12px;
-  font-weight: 700;
+  border-radius: var(--radius-sm);
 }
 
-.mini-change.up { background:#dff7e6; color:#2cab3d; }
-.mini-change.down { background:#ffe5e5; color:#ff4444; }
+.mini-change.up { background: var(--green-bg); color: var(--green); }
+.mini-change.down { background: var(--red-bg); color: var(--red); }
 
-/* PRICE */
+/* price */
 .mini-price {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 700;
-  margin: 14px 0;
+  margin: 12px 0;
 }
 
-/* GRAPH */
-.mini-graph {
-  height: 48px;
-}
-
+/* sparkline */
 .spark polyline {
   fill: none;
   stroke-width: 3px;
 }
 
-.mini-card .up polyline { stroke:#2cab3d; }
-.mini-card .down polyline { stroke:#ff4444; }
-
-/* FOOTER */
+/* footer text */
 .mini-footer {
+  margin-top: 12px;
   display: flex;
   justify-content: space-between;
-  margin-top: 14px;
-  color: var(--muted2);
   font-size: 14px;
+  color: var(--text-light);
 }
 
 .mini-link {
-  color: #2b6ef6;
+  color: var(--accent);
   font-weight: 600;
 }
 
-/* MARKET HEADING */
+/* ---------------------------- */
+/* MARKET OVERVIEW HEADING     */
+/* ---------------------------- */
+
 .market-heading {
   text-align: left;
-  margin-top: 26px;
+  margin-top: 30px;
 }
 
 .market-heading-title {
-  font-size: 26px;
-  display:flex;
-  align-items:center;
-  gap:12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .mh-sub {
-  color: var(--muted2);
-  font-size: 16px;
+  color: var(--text-muted);
+  margin-top: 6px;
 }
 
-/* TABLE WRAPPER */
+/* ---------------------------- */
+/* TABLE STYLE                 */
+/* ---------------------------- */
+
 .table-wrap {
-  margin-top: 20px;
-  background: #fff;
-  border-radius: 18px;
-  padding: 12px;
+  margin-top: 18px;
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  padding: 10px;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
 }
 
-/* TABLE */
 .market-table {
   width: 100%;
   border-collapse: collapse;
 }
 
 .market-table th {
-  text-align:left;
-  padding: 14px 18px;
-  color: var(--muted2);
-  font-weight:600;
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+  color: var(--text-light);
 }
 
 .market-table td {
-  padding: 18px;
+  padding: 16px;
   font-size: 16px;
+  border-top: 1px solid #f2f2f2;
 }
 
-/* TABLE ROW */
+/* row name cell */
 .row-name {
   display: flex;
-  gap: 14px;
   align-items: center;
+  gap: 14px;
 }
 
 .row-icon {
-  width: 44px;
-  height: 44px;
-  background: #f3f6fa;
-  border-radius: 10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width: 42px;
+  height: 42px;
+  background: var(--bg-light);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .row-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
 }
 
-.row-sub {
-  font-size: 14px;
-  color: var(--muted2);
+/* change styling */
+.trend.up { color: var(--green); font-weight: 700 }
+.trend.down { color: var(--red); font-weight: 700 }
+
+/* trade btn */
+.trade-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: #f9d9a8;
+  color: #7a4a00;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* TREND COLORS */
-.trend.up { color:#2cab3d; font-weight:700; }
-.trend.down { color:#ff4444; font-weight:700; }
+.trade-btn:hover {
+  transform: translateY(-2px);
+}
 
-/* TRADE BUTTON */
-.trade-btn {
-  padding: 8px 16px;
-  border-radius: 12px;
-  background:#f9d9a8;
-  color:#7a4a00;
-  border:none;
-  cursor:pointer;
-  font-weight:600;
+/* note */
+.dashboard-note {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ---------------------------- */
+/* RESPONSIVE                  */
+/* ---------------------------- */
+
+@media(max-width: 900px) {
+  .mini-cards { flex-direction: column; }
+  .ci-title { font-size: 38px; }
+  .metric-value { font-size: 32px; }
+}
+
+@media(max-width: 600px) {
+  .ci-wrapper { padding: 40px 20px; }
+  .ci-title { font-size: 28px; }
+  .dashboard { padding: 20px; }
+  .ci-metrics { flex-direction: column; gap: 22px; }
 }

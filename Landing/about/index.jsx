@@ -1,73 +1,76 @@
+import { motion } from "framer-motion";
+
+import AboutHero from "./AboutHero";
+import AboutStats from "./AboutStats";
+import CoreValues from "./CoreValues";
+import FeatureGrid from "./FeatureGrid";
+import Footer from "./Footer";
+import InvestFundingSection from "./InvestFundingSection";
+import SubscribeUpdates from "./SubscribeUpdates";
+import WhyChoose from "./WhyChoose";
+
 export default function AboutPage() {
   return (
     <>
-      {/* Inline injected font-face */}
+      {/* Global Font */}
       <style>
         {`
           @font-face {
             font-family: 'URWGeometric';
-            src: url('./URWGeometricRegular.otf') format('opentype');
+            src: url('/fonts/URWGeometricRegular.otf') format('opentype');
             font-weight: 400;
             font-style: normal;
+          }
+
+          html, body {
+            font-family: 'URWGeometric', sans-serif;
+            scroll-behavior: smooth;
           }
         `}
       </style>
 
-      {/* PLAIN FULL SCREEN */}
-      <div
+      {/* Page Wrapper */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         style={{
           width: "100%",
           minHeight: "100vh",
-          padding: "60px 20px",
-          boxSizing: "border-box",
           background: "#ffffff",
-          fontFamily: "URWGeometric, DM Sans, sans-serif",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          overflowX: "hidden",
         }}
       >
-        {/* TITLE */}
-        <h1
-          style={{
-            fontSize: "42px",
-            fontWeight: 700,
-            letterSpacing: "0.4px",
-            color: "#111",
-            textAlign: "center",
-            marginBottom: "20px",
-          }}
-        >
-          About Emireq
-        </h1>
-
-        {/* SUBTITLE */}
-        <p
-          style={{
-            fontSize: "20px",
-            opacity: 0.7,
-            textAlign: "center",
-            marginBottom: "50px",
-            lineHeight: "1.5",
-          }}
-        >
-          Learn about our mission, vision, and platform journey.
-        </p>
-
-        {/* CONTENT AREA */}
+        {/* All Sections Centered */}
         <div
           style={{
             width: "100%",
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "20px 0",
-            fontSize: "26px",
-            fontWeight: 500,
-            textAlign: "center",
+            maxWidth: "1500px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "90px",
+            alignItems: "center",
           }}
         >
-          About Screen Loaded
-          <br />
-          (Add team, mission, timeline here)
+
+          <AboutHero />
+          <AboutStats />
+          <FeatureGrid />
+          <InvestFundingSection />
+          <CoreValues />
+          <WhyChoose />
+          <SubscribeUpdates />
+
         </div>
-      </div>
+
+        {/* Footer Full Width */}
+        <div style={{ width: "100%", marginTop: "110px" }}>
+          <Footer />
+        </div>
+      </motion.div>
     </>
   );
 }

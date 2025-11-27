@@ -11,6 +11,12 @@
   --button-blue-text: #FFFFFF;
   --button-blue-border: #FFFFFF;
 }
+.title {
+  font-size: 2rem !important;
+  font-weight: 600;  /* ← updated from 700 → 600 */
+  line-height: 1.18;
+  margin-top: 1rem;
+}
 
 /* Page container */
 .hero {

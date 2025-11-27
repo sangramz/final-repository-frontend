@@ -9,6 +9,7 @@ export default function HowTokenizationWorks() {
       flexDirection: "column",
       alignItems: "center",
       background: "#ffffff",
+      marginTop:"-9rem"
     },
 
     processLabel: {

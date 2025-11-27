@@ -1,34 +1,191 @@
-/* Disable all horizontal scrolling globally */
-html, body {
-  overflow-x: hidden !important;
-  max-width: 100% !important;
+/* GLOBAL — Prevent any horizontal scroll */
+/* --- Consistent Rendering Across Browsers --- */
+* {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
-/* Hide scrollbar in Firefox & Edge */
-.no-horizontal-scroll {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
+html {
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+  touch-action: manipulation;
 }
 
-/* Hide scrollbar in Chrome, Safari, Brave, Opera */
-.no-horizontal-scroll::-webkit-scrollbar {
-  display: none !important;
-}
 body {
-  width: 100% !important;
-  overflow-x: clip !important;   /* prevents ANY horizontal scroll and removes sticky bar */
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  user-select: none; /* optional UI polish */
 }
 
-.no-horizontal-scroll {
-  overflow-x: clip !important;   /* stronger than hidden */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
-.app-scale-wrap {
-  transform: scale(0.90);
-  transform-origin: center center; /* ⭐ perfect proportional scaling */
+
+/* Enable only vertical scrolling */
+.no-horizontal-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+/* Hide scrollbars visually (functionality stays) */
+.no-horizontal-scroll::-webkit-scrollbar { width: 0; }
+.no-horizontal-scroll { scrollbar-width: none; }
+
+/* --------- MAIN RESPONSIVE SCALE --------- */
+.scale-wrapper {
   width: 100%;
   max-width: 1280px;
+  margin: 0 auto;
+  transform: scale(1.00005);
+  transform-origin: top center;
+  
+  /* prevents browsers from recalculating scale differently */
+  min-width: 1024px;
+}
+
+/* Ensure marketplace screens obey same layout */
+.marketplace-container {
+  padding-top: 4rem;
+  padding-bottom: 6rem;
+}
+
+/* Optional: remove excessive inline spacing usage */
+.marketplace-container > div[style] {
+  margin-bottom: 2.5rem !important;
+}
+
+/* Prevent layout shifting on zoom across marketplace too */
+html {
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Maintain global scaling behavior */
+.scale-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  transform: scale(1.00005);
+  transform-origin: top center;
+  min-width: 1024px;
+}
+
+/* Responsive fallback */
+@media (max-width: 1280px) {
+  .scale-wrapper {
+    transform: scale(1);
+    min-width: auto;
+  }
+}
+/* Investors layout spacing consistency */
+.investors-container {
+  padding-top: 2rem;
+  padding-bottom: 6rem;
+  font-family: "URWGeometric", "DM Sans", sans-serif;
+}
+
+/* Reduce random inline spacing from components */
+.investors-container > * {
+  margin-bottom: 4rem;
+}
+
+.investors-container > *:last-child {
+  margin-bottom: 0;
+}
+/* Tokenize Page Style Alignment */
+.tokenize-container {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+}
+
+
+
+/* Optional: stops content from going behind bottom floating footer */
+body {
+  padding-bottom: 80px;
+}
+
+/* Content container */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 3rem;
+  gap: 2rem;
+}
+
+/* HERO IMG */
+.hero-image {
+  width: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+  margin-top: 1.5rem;
+}
+
+/* --------- RESPONSIVE BREAKPOINTS --------- */
+
+@media (max-width: 1100px) {
+  .scale-wrapper {
+    transform: scale(1);  /* remove scaling on tablets/smaller laptops */
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 2rem 1.5rem;
+  }
+  .hero-image {
+    border-radius: 12px;
+  }
+}
+@media (max-width: 1280px) {
+  .scale-wrapper {
+    transform: scale(1); /* remove scaling on smaller screens */
+    min-width: auto;
+  }
+}
+html {
+  zoom: 1 !important;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+  .hero-image {
+    border-radius: 10px;
+  }
+}
+/* FIX bottom spacing */
+.no-horizontal-scroll {
+  height: auto;
+  min-height: 100vh;
+}
+
+.scale-wrapper {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  height: auto !important;
+  min-height: auto !important;
 }

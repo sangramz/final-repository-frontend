@@ -1,5 +1,5 @@
 import React from "react";
-import illus from "../assets/preview.svg"
+import illus from "../assets/preview.svg";
 
 export default function TokenizeHero() {
   return (
@@ -17,138 +17,128 @@ export default function TokenizeHero() {
   :root{
     --page-width: 920px;
     --muted: #64748b;
-    --accent-start: #2b8cff;
-    --accent-end: #1b4fe0;
   }
 
   .tokenize-root{
-    font-family: "URWGeometric", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-family: "URWGeometric", system-ui;
     display:flex;
     justify-content:center;
     padding:56px 24px 72px;
-    background: radial-gradient(600px 400px at 10% 10%, rgba(99,102,241,0.06), transparent 10%), 
-                radial-gradient(500px 380px at 95% 90%, rgba(59,130,246,0.03), transparent 12%), 
-                #ffffff;
+    background:#ffffff;
+marginTop:-3rem;
+    /* Scale */
+    transform: scale(0.9);
+    transform-origin: top center;
+    width: 111.5%;
+  }
+
+  @media (max-width:900px) {
+    .tokenize-root {
+      transform: scale(1);
+      width: 100%;
+    }
   }
 
   .tokenize-container{
     width:var(--page-width);
     text-align:center;
-    transform: scale(1.3);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3rem;
+    margin-top:-2rem; /* User request */
   }
 
-  .badge{
-    display:inline-block;
-    padding:6px 10px;
-    background:#f1f7ff;
-    color:#0b2a66;
-    border-radius:8px;
-    font-size:11px;
-    letter-spacing:0.6px;
-    margin-bottom:16px;
+  /* Badge */
+  .badge {
+    padding: 8px 22px;
+    background: linear-gradient(90deg, #7dadff 0%, #e5e2a5 100%);
+    border-radius: 30px;
+    font-size: 12px;
+    letter-spacing: 0.7px;
+    font-weight: 600;
+    text-transform: uppercase;
   }
 
+  /* Title */
   .heading{
-    font-size:44px;
-    line-height:1.02;
-    font-weight:400 !important;   /* ↓ reduced */
+    font-size:6.4rem;
+    line-height:1;
     color:#0f1724;
-    margin:8px 0 12px;
     max-width:880px;
-    margin-left:auto;
-    margin-right:auto;
+    
+    font-weight:500;
   }
 
+  /* Subtitle */
   .sub{
     color:var(--muted);
-    font-size:19px;
+    font-size:2.25rem;
     max-width:760px;
-    margin:0 auto 22px;
+    line-height:1.45;
+    margin:0;
   }
 
+  /* CTA */
   .cta-row{
     display:flex;
     gap:12px;
     justify-content:center;
-    margin:18px 0 26px;
   }
 
   .btn-primary{
     background:#152B5A;
     color:white;
-    border:none;
-    padding:11px 18px;
+    padding:14px 22px;
     border-radius:10px;
     font-weight:700;
-    box-shadow:0 10px 30px rgba(27,79,224,0.18);
-    cursor:pointer;
+    border:none;
   }
 
   .btn-outline{
     background:white;
-    color:#1f2937;
     border:1px solid #e6e9ef;
-    padding:11px 16px;
+    padding:14px 22px;
     border-radius:10px;
-    cursor:pointer;
     font-weight:700;
   }
 
-  /* Stats card layout */
+  /* Stats */
   .card {
     display:flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction:column;
+    gap:1.5rem;
     align-items:center;
-    gap:22px;
-  }
-
-  .stat-item {
-    white-space: nowrap;
   }
 
   .stat-value{
     font-weight:600; 
-    font-size:16px; 
+    font-size:1.4rem; 
     color:#0f1724;
   }
 
   .stat-label{
-    font-size:12px; 
-    color:var(--muted); 
-    margin-top:6px;
+    font-size:0.9rem; 
+    color:var(--muted);
   }
 
+  /* Image */
   .hero-image{
-    max-width:92%;
-    height:auto;
-    display:block;
+    width:80%;
+    max-width:640px;
     border-radius:10px;
-    position:relative;
-    left:5rem;
   }
 
-  /* Responsive: Card goes into column */
-  @media (max-width:980px){
-    :root{ --page-width:760px }
-    .heading{ font-size:36px }
-    .card { flex-direction:row; gap:16px; }
-  }
-
+  /* Mobile fixes */
   @media (max-width:640px){
-    :root{ --page-width:360px }
-    .heading{ font-size:24px }
-    .card { 
-      flex-direction:column; 
-      gap:8px; 
-      padding:14px;
-      align-items:flex-start;
-    }
+    .heading { font-size:2.4rem; }
+    .sub { font-size:1rem; }
   }
 
       `}</style>
 
       <div className="tokenize-container">
+
         <div className="badge">TOKENIZE</div>
 
         <h1 className="heading">
@@ -164,26 +154,93 @@ export default function TokenizeHero() {
           <button className="btn-outline">Read Whitepaper</button>
         </div>
 
-        <div className="card" aria-label="stats">
-          <div className="stat-item">
-            <div className="stat-value">100M EMN</div>
-            <div className="stat-label">Total Emn supply</div>
-          </div>
+      <div
+  aria-label="stats"
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "4rem",
+    marginTop: "2rem",
+    fontFamily: "inherit",
+    userSelect: "none"
+  }}
+>
+  <div style={{ textAlign: "center" }}>
+    <div
+      style={{
+        fontWeight: 600,
+        fontSize: "2rem",
+        lineHeight: "1",
+        margin: 0,
+        padding: 0
+      }}
+    >
+      100M EMN
+    </div>
+    <div
+      style={{
+        fontSize: "0.9rem",
+        opacity: 0.7,
+        marginTop: "6px",
+        lineHeight: "1.2"
+      }}
+    >
+      Total Emn supply
+    </div>
+  </div>
 
-          <div className="stat-item">
-            <div className="stat-value">3 Tokens</div>
-            <div className="stat-label">Ecosystem tokens (EMN / XMR / AVX)</div>
-          </div>
+  <div style={{ textAlign: "center" }}>
+    <div
+      style={{
+        fontWeight: 600,
+        fontSize: "2rem",
+        lineHeight: "1",
+        margin: 0,
+        padding: 0
+      }}
+    >
+      3 Tokens
+    </div>
+    <div
+      style={{
+        fontSize: "0.9rem",
+        opacity: 0.7,
+        marginTop: "6px",
+        lineHeight: "1.2"
+      }}
+    >
+      Ecosystem tokens (EMN / XMR / AVX)
+    </div>
+  </div>
 
-          <div className="stat-item">
-            <div className="stat-value">Shariah</div>
-            <div className="stat-label">Standards & Audit Ready</div>
-          </div>
-        </div>
-
-        <div style={{marginTop:"10rem"}}></div>
+  <div style={{ textAlign: "center" }}>
+    <div
+      style={{
+        fontWeight: 600,
+        fontSize: "2rem",
+        lineHeight: "1",
+        margin: 0,
+        padding: 0
+      }}
+    >
+      Shariah
+    </div>
+    <div
+      style={{
+        fontSize: "0.9rem",
+        opacity: 0.7,
+        marginTop: "6px",
+        lineHeight: "1.2"
+      }}
+    >
+      Standards & Audit Ready
+    </div>
+  </div>
+</div>
 
         <img className="hero-image" src={illus} alt="Tokenize preview" />
+
       </div>
     </div>
   );

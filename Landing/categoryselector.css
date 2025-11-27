@@ -1,174 +1,194 @@
-/* WRAPPER */
-/* ----------------------------------- */
-/* CUSTOM FONT: URW Geometric Regular  */
-/* ----------------------------------- */
+/* FONT (Keep your font import) */
 @font-face {
   font-family: "URW Geometric";
   src: url("/fonts/URWGeometricRegular.otf") format("opentype");
   font-weight: 400;
-  font-style: normal;
   font-display: swap;
 }
 
-.category-wrapper {
-  padding: 2rem 4rem;
-  font-family: "URW Geometric", "Inter", sans-serif;
-  font-weight: 400;
-}
 body {
   font-family: "URW Geometric", sans-serif;
-  font-weight: 400;
 }
 
-/* STEPPER */
+/* MAIN WRAPPER */
+.category-wrapper {
+  padding: 3rem 4rem;
+  max-width: 1280px;
+  margin: auto;
+}
+
+/* ---------------------------
+   STEPPER
+---------------------------- */
 .stepper {
   display: flex;
   align-items: center;
   gap: 1.2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.7rem;
 }
 
 .step {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  color: #888;
-  font-size: 0.95rem;
+  gap: 0.45rem;
+  font-size: 1rem;
+  color: #9a9a9a;
+  transition: 0.25s ease;
 }
 
-.step.done { color: #4caf50; }
-.step.active { color: #000; font-weight: 600; }
+.step.done {
+  color: #38c172;
+}
+
+.step.active {
+  color: #000;
+  font-weight: 600;
+}
 
 .circle {
-  width: 1.8rem;
-  height: 1.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
-  background: #eee;
+  background: #ececec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
 }
 
 .line {
-  width: 5rem;
+  width: 6rem;
   height: 3px;
-  background: #eee;
+  background: #ececec;
   border-radius: 6px;
 }
-.line.active { background: #000; }
 
-/* TOOLTIP */
+.line.active {
+  background: #000;
+}
+
+/* ---------------------------
+   TOOLTIP
+---------------------------- */
 .tooltip-box {
   background: #7d6bff;
   color: white;
-  padding: 1rem 1.6rem;
-  border-radius: 10px;
+  padding: 1rem 1.7rem;
+  border-radius: 12px;
   width: max-content;
   float: right;
   margin-bottom: 1.5rem;
+  font-size: 0.93rem;
   opacity: 0;
 }
-.animate-tooltip {
-  animation: fadeSlide 0.8s ease forwards;
-}
-@keyframes fadeSlide {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
+
+.title {
+  font-size: 1.8rem;
+  margin: 1rem 0 0.8rem;
+  font-weight: 600;
+  color: #111;
 }
 
-/* ARROW */
-.arrow-animated {
-  width: 0;
-  height: 0;
-  margin: 1rem auto;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-top: 18px solid #b78cff;
-  animation: arrowBounce 1.2s infinite;
-}
-@keyframes arrowBounce {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(9px); }
-}
-
-/* CATEGORY GRID */
+/* ---------------------------
+   GRID & CARD
+---------------------------- */
 .categories-grid {
+  margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 1.8rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(3, 1fr);
 }
 
-/* CATEGORY CARD */
 .category-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 1.8rem;
+  padding: 2rem;
   border-radius: 20px;
-  background: #fff;
+  background: #ffffff;
   border: 2px solid transparent;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-
-  min-height: 110px; /* identical height */
   cursor: pointer;
-  transition: 0.25s ease;
+  min-height: 120px;
+  transition: all 0.35s ease;
+  box-shadow: 0 14px 26px rgba(0,0,0,0.05);
+
+  /* FIX: prevent shifting on hover/active */
+  box-sizing: border-box;
+}
+
+.premium-toggle-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  /* FIX: stop different card text lengths from pushing it */
+  min-width: 60px;
 }
 
 .category-card:hover {
-  transform: translateY(-4px);
+  background: #fbfbfb;
+  border-color: rgba(120,120,255,0.15);
 }
 
 .category-card.active {
-  background: #f6f9ff;
-  border-color: #e0e7ff;
+  background: #f7f3ff;
+  border-color: #dabdff;
 }
 
-/* LEFT BLOCK (icon + content) */
+/* LEFT CONTENT */
 .category-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.3rem;
 }
 
-/* ICON BOX */
 .category-icon {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 12px;
+  width: 3.3rem;
+  height: 3.3rem;
+  border-radius: 14px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  color: white;
 }
 
-.category-icon svg {
-  width: 1.5rem !important;
-  height: 1.5rem !important;
-}
-
-/* TEXT */
 .category-text h4 {
+  font-size: 1.15rem;
   margin: 0;
-  padding: 0;
-  font-size: 1.1rem;
   font-weight: 600;
 }
 
 .category-text p {
   margin: 0;
-  padding: 0;
-  font-size: 0.8rem;
-  color: #666;
+  color: #656565;
+  font-size: 0.85rem;
 }
 
-/* TOGGLE */
+/* EMPTY CARD */
+.empty-card {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: #999;
+}
+
+/* ---------------------------
+   PREMIUM TOGGLE
+---------------------------- */
+
 .switch {
-  width: 42px;
-  height: 22px;
+  width: 52px;
+  height: 28px;
   position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* FIX: prevent toggle shrinking or stretching */
   flex-shrink: 0;
 }
+
 
 .switch input {
   opacity: 0;
@@ -179,71 +199,95 @@ body {
 .slider {
   position: absolute;
   inset: 0;
-  background: #ddd;
-  border-radius: 30px;
-  transition: 0.3s;
+  border-radius: 50px;
+  background: rgba(205,205,205,0.55);
+  backdrop-filter: blur(6px);
+  transition: all 0.35s cubic-bezier(.22,1,.36,1);
+  box-shadow: inset 0 0 7px rgba(0,0,0,0.13);
 }
 
-.slider:before {
+.slider::before {
   content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  left: 3px;
-  bottom: 3px;
-  background: #fff;
+  width: 21px;
+  height: 21px;
+  background: white;
   border-radius: 50%;
-  transition: 0.3s;
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1);
+  box-shadow: 
+    0 3px 6px rgba(0,0,0,0.25),
+    inset 0 0 4px rgba(255,255,255,0.7);
 }
 
-input:checked + .slider { background: #ffcc00; }
-input:checked + .slider:before { transform: translateX(18px); }
-
-/* EMPTY CARD */
-.empty-card {
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: #777;
+input:checked + .slider {
+  background: linear-gradient(135deg, #ffe45f, #ffbe00);
+  box-shadow: inset 0 0 5px rgba(255,208,0,0.5);
 }
 
-/* CONTINUE BOX */
+input:checked + .slider::before {
+  transform: translateX(24px) scale(1.1);
+}
+
+/* ---------------------------
+   CONTINUE CTA
+---------------------------- */
 .continue-box {
   background: linear-gradient(120deg, #ffe58d, #ffce44);
-  padding: 1.2rem 1.8rem;
-  border-radius: 10px;
+  padding: 1.3rem 2rem;
+  border-radius: 12px;
   width: max-content;
-  margin: 2rem auto;
+  margin: 2.5rem auto;
   text-align: center;
+  font-weight: 600;
+  color: #000;
   opacity: 0;
+  transform: translateY(10px);
+  transition: 0.35s ease;
 }
 
-.animate-continue {
-  animation: fadeUp 0.9s ease forwards .3s;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* FOOTER */
 .footer-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1.4rem;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
 }
+
 .clear {
-  text-decoration: underline;
   cursor: pointer;
-  color: #444;
+  text-decoration: underline;
+  color: #666;
+  font-size: 0.95rem;
 }
+
 .btn-continue {
   background: #0A1F4D;
   color: white;
-  padding: 0.7rem 1.6rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  padding: 0.8rem 1.9rem;
+  border-radius: 9px;
+  font-size: 1rem;
   border: none;
   cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.btn-continue:hover {
+  background: #08173a;
+}
+
+/* ---------------------------
+   RESPONSIVE DESIGN
+---------------------------- */
+
+@media (max-width: 980px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 660px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
 }

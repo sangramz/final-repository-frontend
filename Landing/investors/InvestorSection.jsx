@@ -20,16 +20,19 @@ export default function InvestorSection() {
       `,
     },
 
-    tag: {
-      display: "inline-block",
-      background: "#f5f6fa",
-      borderRadius: "6px",
-      padding: "6px 14px",
-      fontSize: "14px",
-      fontWeight: 600,
-      color: "#5b5d6a",
-      marginBottom: "22px",
-    },
+tag: {
+  display: "inline-block",
+  background: "linear-gradient(90deg, #7dadff 0%, #e5e2a5 100%)",
+  borderRadius: "14px",
+  padding: "6px 14px",
+  fontSize: "14px",
+  fontWeight: 600,
+  color: "#000", // changed for contrast
+  marginBottom: "22px",
+  letterSpacing: "0.5px",
+  transition: "0.25s ease-in-out",
+}
+,
 
     title: {
       fontSize: "98px",
