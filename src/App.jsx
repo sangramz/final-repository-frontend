@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 const LandingApp = React.lazy(() => import('./pages/Landing/App'));
 const StartupDashboardApp = React.lazy(() => import('./pages/StartupDashboard/App'));
 const InvestorDashboardApp = React.lazy(() => import('./pages/InvestorDashboard/App'));
+const InvestorLogin = React.lazy(() => import('./pages/InvestorAuth/InvestorLogin'));
+const InvestorRegisterFlow = React.lazy(() => import('./pages/InvestorAuth/InvestorRegisterFlow'));
 const SuperAdminDashboardApp = React.lazy(() => import('./pages/SuperAdminDashboard/App'));
 
 // Startup Registration Components
@@ -25,6 +27,8 @@ function App() {
 
                     {/* Dashboards */}
                     <Route path="/startup/dashboard" element={<StartupDashboardApp />} />
+                    <Route path="/investor/login" element={<InvestorLogin />} />
+                    <Route path="/investor/register" element={<InvestorRegisterFlow />} />
                     <Route path="/investor/dashboard" element={<InvestorDashboardApp />} />
                     <Route path="/admin/*" element={<SuperAdminDashboardApp />} />
 

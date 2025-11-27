@@ -27,7 +27,7 @@ const Header = () => {
         {/* COLUMN 3 — BUTTONS */}
         <div className="col btn-col">
           <button className="btn-startups" onClick={() => navigate('/startup/register')}>Startups</button>
-          <button className="btn-investors" onClick={() => navigate('/investor/dashboard')}>Investors</button>
+          <button className="btn-investors" onClick={() => navigate('/investor/login')}>Investors</button>
         </div>
 
       </div>
